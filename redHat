@@ -1,0 +1,28 @@
+FROM registry.access.redhat.com/rhel7/rhel
+
+ADD ./FreeFlyer_7.6.1.zip /FreeFlyer/FreeFlyer_7.6.1.zip
+WORKDIR /FreeFlyer
+
+# Register with RedHat
+RUN subscription-manager register --auto-attach \
+  --username ${USERNAME} \
+  --password ${PASSWORD} \
+RUN subscription-manager repos --enable=rhel-7-server-rpms
+
+# Install all the individual packages we need
+RUN yum install unzip -y
+RUN yum install libicu -y
+RUN yum install wget -y
+
+RUN unzip FreeFlyer_7.6.1.zip
+WORKDIR /FreeFlyer/FreeFlyer_7.6.1_Installer_Linux_64-Bit/
+RUN ls
+
+# Install dependencies
+RUN wget -P /etc/yum.repos.d/ https://packages.efficios.com/repo.files/EfficiOS-RHEL7-x86-64.repo
+RUN rpmkeys --import https://packages.efficios.com/rhel/repo.key
+RUN FF_ACCEPT_SLA=true yum install freeflyer_7.6.1.54738-0-0.el7.x86_64.rpm -y
+
+# Return version number
+RUN echo "FreeFlyer Version:"
+RUN ff -v

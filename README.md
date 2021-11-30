@@ -1,12 +1,41 @@
-# FreeFlyerDocker
- A basic guide for running FreeFlyer in a Docker container. There are two options:
- - RedHat Enterprise Linux 
+<h1> FreeFlyerDocker </h1>
+ A basic guide for running FreeFlyer in a Docker container. 
+
+
+ <h2> Table of Contents</h2>
+
+- [OS Choice](#os-choice)
+    - [RedHat Enterprise Linux](#redhat-enterprise-linux)
+    - [Fedora](#fedora)
+- [RedHat Setup](#redhat-setup)
+    - [Step 1: Install Docker](#step-1-install-docker)
+    - [Step 2: Download FreeFlyer](#step-2-download-freeflyer)
+    - [Step 3: Create a RedHat Enterprise account](#step-3-create-a-redhat-enterprise-account)
+    - [Step 4: Update environment variables](#step-4-update-environment-variables)
+    - [Step 5: Check Versions](#step-5-check-versions)
+    - [Step 6: Build the Docker Image](#step-6-build-the-docker-image)
+- [Fedora Setup](#fedora-setup)
+    - [Step 1: Install Docker](#step-1-install-docker-1)
+    - [Step 2: Download FreeFlyer](#step-2-download-freeflyer-1)
+    - [Step 3: Build the Docker Image](#step-3-build-the-docker-image)
+- [Running FreeFlyer](#running-freeflyer)
+  - [Running the Container](#running-the-container)
+  - [Connecting to the License Server](#connecting-to-the-license-server)
+  - [Running a Mission](#running-a-mission)
+
+# OS Choice
+
+There are two options for running FreeFlyer in a Docker container:
+###  RedHat Enterprise Linux
+
    - Pros
      - Recommended by FreeFlyer
      - Correct versions of required packages are easy to install
    - Cons
      - Requires a RHEL license to use, and account to login
-- Fedora
+
+### Fedora 
+
    - Pros
      - No license required
      - Simpler to install

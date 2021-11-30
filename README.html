@@ -36,26 +36,60 @@
     </head>
     <body class="vscode-body vscode-light">
         <h1 id="freeflyerdocker">FreeFlyerDocker</h1>
-<p>A basic guide for running FreeFlyer in a RedHat Enterprise Docker container</p>
-<h1 id="installation">Installation</h1>
-<h2 id="install-docker">Install Docker</h2>
+<p>A basic guide for running FreeFlyer in a Docker container. There are two options:</p>
+<ul>
+<li>RedHat Enterprise Linux
+<ul>
+<li>Pros
+<ul>
+<li>Recommended by FreeFlyer</li>
+<li>Correct versions of required packages are easy to install</li>
+</ul>
+</li>
+<li>Cons
+<ul>
+<li>Requires a RHEL license to use, and account to login</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Fedora
+<ul>
+<li>Pros
+<ul>
+<li>No license required</li>
+<li>Simpler to install</li>
+</ul>
+</li>
+<li>Cons
+<ul>
+<li>Have to keep better track of versions</li>
+<li>Requires some slightly hacky symlinks</li>
+<li>Not guaranteed to be supported if FreeFlyer changes something</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="redhat-setup">RedHat Setup</h1>
+<h3 id="step-1-install-docker">Step 1: Install Docker</h3>
 <p>Before doing anything, you will need Docker. This can be installed at:
 <a href="https://www.docker.com/get-started">https://www.docker.com/get-started</a></p>
-<h2 id="download-freeflyer">Download FreeFlyer</h2>
+<h3 id="step-2-download-freeflyer">Step 2: Download FreeFlyer</h3>
 <p>You will also need the Linux release for FreeFlyer. Once you have an account and have logged in, this can be downloaded at:
 <a href="https://ai-solutions.com/restricted/freeflyer-downloads/">https://ai-solutions.com/restricted/freeflyer-downloads/</a></p>
 <p>Once you've got it, put it in the top level of this directory.</p>
-<h2 id="create-a-redhat-enterprise-account">Create a RedHat Enterprise account</h2>
+<h3 id="step-3-create-a-redhat-enterprise-account">Step 3: Create a RedHat Enterprise account</h3>
 <p>FreeFlyer is configured to run on RedHat Enterprise Linux (RHEL). You will need to create an account on RedHat Enterprise Linux. You may use a free trial license, or you can purchase a license. This can all be done at:
 <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux</a></p>
-<h2 id="update-environment-variables">Update environment variables</h2>
+<h3 id="step-4-update-environment-variables">Step 4: Update environment variables</h3>
 <p>Once you have your RHEL account, you will need to update the your environment variables. This can be done with:</p>
 <pre><code class="language-bash"><div><span class="hljs-built_in">export</span> FFUSER=&lt;your username&gt;
 <span class="hljs-built_in">export</span> FFPASS=&lt;your password&gt;
 </div></code></pre>
-<h2 id="check-versions">Check Versions</h2>
+<h3 id="step-5-check-versions">Step 5: Check Versions</h3>
 <p>All of this was built for FreeFlyer 7.6.1. If that changes, you will need to update the <code>redHat</code> dockerfile accordingly.</p>
-<h2 id="build-the-docker-image">Build the Docker Image</h2>
+<h3 id="step-6-build-the-docker-image">Step 6: Build the Docker Image</h3>
 <p>Actually building the image should be very straightforward. You can do this by running the following command:</p>
 <pre><code class="language-bash"><div>docker build \
 --build-arg FFUSER \
@@ -63,11 +97,35 @@
 -t freeflyer \
 -f redHat .
 </div></code></pre>
-<p>This will save it as a Docker image called <code>freeflyer</code>.</p>
-<h3 id="notes">Notes</h3>
-<ul>
-<li>The line beginning <code>Importing GPG key 0xFD431D51:</code> may be in red. This is not an issue, and should be fine.</li>
-</ul>
+<p>This will use the <code>redHat</code> dockerfile to build the image, and tag the resulting build with the name <code>freeflyer</code>.</p>
+<p><strong>Note</strong>: The line beginning <code>Importing GPG key 0xFD431D51:</code> may be in red. This is not an issue, and should be fine.</p>
+<h1 id="fedora-setup">Fedora Setup</h1>
+<h3 id="step-1-install-docker-1">Step 1: Install Docker</h3>
+<p>Before doing anything, you will need Docker. This can be installed at:
+<a href="https://www.docker.com/get-started">https://www.docker.com/get-started</a></p>
+<h3 id="step-2-download-freeflyer-1">Step 2: Download FreeFlyer</h3>
+<p>You will also need the Linux release for FreeFlyer. Once you have an account and have logged in, this can be downloaded at:
+<a href="https://ai-solutions.com/restricted/freeflyer-downloads/">https://ai-solutions.com/restricted/freeflyer-downloads/</a></p>
+<p>Once you've got it, put it in the top level of this directory.</p>
+<h3 id="step-3-build-the-docker-image">Step 3: Build the Docker Image</h3>
+<p>Actually building the image should be very straightforward. You can do this by running the following command:</p>
+<pre><code class="language-bash"><div>docker build \
+-t freeflyer \
+-f fedora .
+</div></code></pre>
+<p>This will use the <code>fedora</code> dockerfile to build the image, and tag the resulting build with the name <code>freeflyer</code>.</p>
+<h1 id="running-freeflyer">Running FreeFlyer</h1>
+<h2 id="running-the-container">Running the Container</h2>
+<p>To run the container simply type:</p>
+<pre><code class="language-bash"><div>docker run -it --name runningff freeflyer /bin/bash
+</div></code></pre>
+<p>This will run the container <code>freeflyer</code> interactively (<code>-it</code>), call the running container <code>runningff</code>, and run the <code>/bin/bash</code> shell.</p>
+<p>You can leave again with <code>exit</code> to exit and <strong>stop</strong> the container, or with <code>CTRL+p CTRL+q</code> to exit and leave it running in the background.</p>
+<p>To rejoin, you can use <code>docker attach runningff</code>.</p>
+<h2 id="connecting-to-the-license-server">Connecting to the License Server</h2>
+<p>TODO</p>
+<h2 id="running-a-mission">Running a Mission</h2>
+<p>TODO</p>
 
     </body>
     </html>

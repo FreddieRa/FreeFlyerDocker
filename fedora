@@ -1,0 +1,27 @@
+FROM fedora:latest
+
+
+ADD ./FreeFlyer_7.6.1.zip /FreeFlyer/FreeFlyer_7.6.1.zip
+WORKDIR /FreeFlyer
+
+# Install all the individual packages we need
+RUN yum install unzip -y
+RUN yum install libicu -y
+RUN yum install libnsl -y
+RUN yum install wget -y
+
+RUN unzip FreeFlyer_7.6.1.zip
+WORKDIR /FreeFlyer/FreeFlyer_7.6.1_Installer_Linux_64-Bit/
+RUN ls
+
+# Install dependencies
+RUN FF_ACCEPT_SLA=true yum install freeflyer_7.6.1.54738-0-0.el7.x86_64.rpm -y
+
+# Symlink to correct for version issues with libicu
+RUN ln /usr/lib64/libicudata.so.69 /usr/lib64/libicudata.so.50
+RUN ln /usr/lib64/libicuuc.so.69 /usr/lib64/libicuuc.so.50
+RUN ln /usr/lib64/libicui18n.so.69 /usr/lib64/libicui18n.so.50
+
+# Checking that we don't get an error
+# This won't show the version number on build though
+RUN ff -v

@@ -22,9 +22,14 @@ FreeFlyer is configured to run on RedHat Enterprise Linux (RHEL). You will need 
 https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux
 
 
-## Update `env.list`
+## Update environment variables
 
-Once you have your RHEL account, you will need to update the `env.list` file. This file is located in the top level of this directory, and simply replace the `username` and `password` with your account information.
+Once you have your RHEL account, you will need to update the your environment variables. This can be done with:
+```bash
+export FFUSER=<your username>
+export FFPASS=<your password>
+```
+
 
 
 ## Check Versions
@@ -36,7 +41,11 @@ All of this was built for FreeFlyer 7.6.1. If that changes, you will need to upd
 
 Actually building the image should be very straightforward. You can do this by running the following command:
 ```bash
-docker build -t freeflyer -f redHat .
+docker build \
+--build-arg FFUSER \
+--build-arg FFPASS \
+-t freeflyer \
+-f redHat .
 ```
 
 This will save it as a Docker image called `freeflyer`.
@@ -44,4 +53,3 @@ This will save it as a Docker image called `freeflyer`.
 ### Notes
 
 - The line beginning `Importing GPG key 0xFD431D51:` may be in red. This is not an issue, and should be fine.
-- If all goes well, it should print out the current FreeFlyer version at the end.

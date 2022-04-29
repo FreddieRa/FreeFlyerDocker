@@ -1,0 +1,1 @@
+For information on setting up a network license, see the FreeFlyer Help File under Appendix -> Licensing -> Network Licensing.

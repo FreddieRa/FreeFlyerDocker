@@ -20,6 +20,7 @@
     - [Step 3: Build the Docker Image](#step-3-build-the-docker-image)
 - [Running FreeFlyer](#running-freeflyer)
   - [Running the Container](#running-the-container)
+  - [Ensuring Correct Install](#ensuring-correct-install)
   - [Connecting to the License Server](#connecting-to-the-license-server)
   - [Running a Mission](#running-a-mission)
 
@@ -139,10 +140,15 @@ You can leave again with `exit` to exit and **stop** the container, or with `CTR
 
 To rejoin, you can use `docker attach runningff`.
 
+## Ensuring Correct Install
+Running `ff --version` in the container should return the version if everything is installed correctly. This does not require a license server or mission plan.
 
 ## Connecting to the License Server
-TODO
+1. Setup license server (see LicenseServer/README)
+2. `ff -de -rls [instance ip] 27000`
 
 ## Running a Mission
-TODO
+Refer to https://ai-solutions.com/_help_Files/command_line_reference.htm for additional details.
+
+`ff -dss -mp <PATH TO MISSION PLAN>`
 
